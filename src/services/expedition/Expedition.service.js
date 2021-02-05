@@ -13,8 +13,8 @@ class ExpeditionService {
 
             return response.data;
         } catch (e) {
-            // alert(JSON.stringify(e.response.data, null, 2))
-            return e.response.data;
+            alert(JSON.stringify(e.response.data, null, 2))
+            // return e.response.data;
         }
     }
 }

@@ -4,7 +4,13 @@ export const FoundImages = ({ imagesToShow }) => {
     return (
         <>
             {
-                imagesToShow.map(image => <SingleFoundImage key={image.id} image={image}/>)
+                imagesToShow.length &&
+
+                <div>
+                            {
+                                imagesToShow.map(image => <SingleFoundImage key={image.id} image={image}/>)
+                            }
+                </div>
             }
         </>
     );

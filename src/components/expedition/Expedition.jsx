@@ -5,6 +5,8 @@ import { InputLabel, FormControl, Select, TextField, Button } from '@material-ui
 import { ImageSearch } from '@material-ui/icons';
 import {useEffect, useState} from "react";
 import {FoundImages} from "../found-images/FoundImages";
+import './Expedition.css'
+import sp from "../../images/space4.jpg";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -50,122 +52,139 @@ export const Expedition = () => {
     };
 
     const loadMarsImages = async () => {
-        // setImagesToShows([]);
-        // setNext(3);
+        setFoundImages([]);
+        setImagesToShows([]);
+        setNext(3)
 
         const { rover, camera, sol } = values;
 
-        const res = await expeditionService.loadImages(rover, sol, camera);
-        console.log(res)
+        const { photos } = await expeditionService.loadImages(rover, sol, camera);
 
-        if (!res?.photos?.length) {
+        if (!photos.length) {
             setMessage('no found image, try to change options');
             return;
         }
 
-        // setFoundImages(res.photos);
-        // setMessage('');
-        // loopWithSlice();
+        setFoundImages(photos);
+        setMessage('');
+        first(0, postsPerPage, photos);
     };
 
-    // const loopWithSlice = (start, end) => {
-    //     const slicedPosts = foundImages.slice(start, end);
-    //     arrayForHoldingPosts = [...arrayForHoldingPosts, ...slicedPosts];
-    //     setImagesToShows(arrayForHoldingPosts);
-    // };
+    const first = (start, end, photos) => {
+        const slicedPosts = photos.slice(start, end);
+        setImagesToShows(slicedPosts);
+    };
 
-    // useEffect(() => {
-    //     loopWithSlice(0, postsPerPage);
-    // }, []);
+    const loopWithSlice = (start, end) => {
+        const slicedPosts = foundImages.slice(start, end);
+        arrayForHoldingPosts = [...imagesToShow, ...slicedPosts];
+        setImagesToShows(arrayForHoldingPosts);
+    };
 
-    // const handleShowMorePosts = () => {
-    //     loopWithSlice(next, next + postsPerPage);
-    //     setNext(next + postsPerPage);
-    // };
+    const handleShowMorePosts = () => {
+        loopWithSlice(next, next + postsPerPage);
+        setNext(next + postsPerPage);
+    };
+
+    useEffect(() => {
+        document.body.style.backgroundImage = `url(${sp})`;
+        // document.body.style.backgroundColor = '#282c34';
+        // document.body.style.backgroundImage = `url()`;
+    }, [])
 
     return (
-        <>
+        <div>
             <h1> START YOUR EXPEDITION TO MARS </h1>
-            <h2> select rover, camera and martian sol to show images </h2>
 
-            <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="filled-rover-native-simple">ROVER</InputLabel>
-                <Select
-                    native
-                    value={values.rover}
-                    onChange={handleChange}
-                    label="Rover"
-                    inputProps={{
-                        name: 'rover',
-                        id: 'filled-rover-native-simple',
-                    }}
-                >
+                <div style={{backgroundColor: "white", padding: 30, margin: '0 auto', width: 1300,
+                    borderRadius: 20, textAlign: "center"}}>
 
-                    <option aria-label="None" value="" />
+                    <h2> select rover, camera and martian sol to show images </h2>
+                    <div style={{
+                        display: "flex", alignItems: "center", justifyContent: "center"}}>
+
+                        <FormControl variant="filled" className={classes.formControl}>
+                            <InputLabel htmlFor="filled-rover-native-simple">ROVER</InputLabel>
+                            <Select
+                                native
+                                value={values.rover}
+                                onChange={handleChange}
+                                label="Rover"
+                                inputProps={{
+                                    name: 'rover',
+                                    id: 'filled-rover-native-simple',
+                                }}
+                            >
+
+                                <option aria-label="None" value="" />
+
+                                {
+                                    rovers.map((rover, i) => <option key={i} value={rover}> { rover } </option>)
+                                }
+                            </Select>
+                        </FormControl>
+
+                        <FormControl variant="filled" className={classes.formControl}>
+                            <InputLabel htmlFor="filled-camera-native-simple">CAMERA</InputLabel>
+                            <Select
+                                native
+                                value={values.camera}
+                                onChange={handleChange}
+                                label="Camera"
+                                inputProps={{
+                                    name: 'camera',
+                                    id: 'filled-camera-native-simple',
+                                }}
+                            >
+
+                                <option aria-label="None" value="" />
+
+                                {
+                                    cameras.map(({abbreviation,  camera}, i) => <option key={i} value={abbreviation}> { camera } </option>)
+                                }
+                            </Select>
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                id="filled-number"
+                                label="MARTIAN SOL"
+                                type="number"
+                                onChange={handleChange}
+                                inputProps={{
+                                    name: 'sol',
+                                    id: 'filled-sol-native-simple',
+                                }}
+                                variant="filled"
+                            />
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <Button onClick={loadMarsImages}
+                                    disabled={!(!!values.rover && !!values.camera && !!values.sol)}
+                                    variant="contained"
+                                    color="primary"
+                                    size="large"
+                                // className={classes.button}
+                                    endIcon={<ImageSearch />}
+                            >
+                                SEARCH
+                            </Button>
+                        </FormControl>
+                    </div>
+
+                    <h3> { message } </h3>
+                    <FoundImages  style={{margin: "0 auto"}}
+                                  imagesToShow={imagesToShow}/>
+
+                    <br/>
 
                     {
-                        rovers.map((rover, i) => <option key={i} value={rover}> { rover } </option>)
+                        foundImages.length > imagesToShow.length &&
+                        <button onClick={handleShowMorePosts}>Load more</button>
                     }
-                </Select>
-            </FormControl>
+                </div>
 
-            <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="filled-camera-native-simple">CAMERA</InputLabel>
-                <Select
-                    native
-                    value={values.camera}
-                    onChange={handleChange}
-                    label="Camera"
-                    inputProps={{
-                        name: 'camera',
-                        id: 'filled-camera-native-simple',
-                    }}
-                >
-
-                    <option aria-label="None" value="" />
-
-                    {
-                        cameras.map(({abbreviation,  camera}, i) => <option key={i} value={abbreviation}> { camera } </option>)
-                    }
-                </Select>
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-                <TextField
-                    id="filled-number"
-                    label="MARTIAN SOL"
-                    type="number"
-                    onChange={handleChange}
-                    inputProps={{
-                        name: 'sol',
-                        id: 'filled-sol-native-simple',
-                    }}
-                    variant="filled"
-                />
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-                <Button onClick={loadMarsImages}
-                        disabled={!(!!values.rover && !!values.camera && !!values.sol)}
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                    // className={classes.button}
-                        endIcon={<ImageSearch />}
-                >
-                    SEARCH
-                </Button>
-            </FormControl>
-
-            <br/>
-            <br/>
-
-            <h3> { message } </h3>
-            <FoundImages imagesToShow={imagesToShow}/>
-            {/*{*/}
-            {/*    foundImages.length &&*/}
-            {/*     <button onClick={handleShowMorePosts}>Load more</button>*/}
-            {/*}*/}
-        </>
+        </div>
     );
 };
