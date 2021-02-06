@@ -95,7 +95,7 @@ export const Expedition = () => {
     }, [])
 
     return (
-        <div>
+        <div style={{marginTop: 100}}>
             <h1> START YOUR EXPEDITION TO MARS </h1>
 
                 <div style={{backgroundColor: "white", padding: 30, margin: '0 auto', width: 1300,
