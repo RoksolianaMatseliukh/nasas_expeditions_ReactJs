@@ -1,4 +1,4 @@
-# Instruction “How to run a code”
+# How to run a code
 
 # 1. Install dependencies
  npm i
