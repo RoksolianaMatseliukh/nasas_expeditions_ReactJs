@@ -15,4 +15,5 @@
     display: flex;
     justify-content: flex-end;
     padding: 20px 30px 20px 0;
+    z-index: 9999;
 }

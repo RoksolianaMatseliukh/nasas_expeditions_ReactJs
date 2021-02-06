@@ -1,6 +1,5 @@
 body {
-  /*background-image: url(./images/space4.jpg);*/
-  /*background-color: #282c34;*/
+  background-image: url(./images/backgroundImage.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

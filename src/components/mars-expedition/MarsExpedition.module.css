@@ -1,0 +1,18 @@
+.marsExpeditionWrapper {
+    margin-top: 200px
+}
+
+.marsExpedition {
+    background-color: white;
+    padding: 30px;
+    margin: 0 auto;
+    width: 1300px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.materialFormWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
