@@ -5,7 +5,7 @@ import { expeditionService } from '../../services/mars-expedition';
 import { IMAGES_PER_PAGE, SEARCH_MESSAGE } from '../../constants';
 import { ImagesToShow } from "../images-to-show/ImagesToShow";
 import { MaterialForm } from "../material-components/MaterialForm";
-import s from './MarsExpedition.module.css'
+import s from './MarsExpedition.module.scss'
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const MarsExpedition = () => {
+export const MarsExpedition = ({ history }) => {
 
     const classes = useStyles();
 
@@ -33,21 +33,25 @@ export const MarsExpedition = () => {
     };
 
     const loadMarsImages = async (values) => {
-        resetState();
+        try {
+            resetState();
 
-        const { rover, camera, sol } = values;
+            const { rover, camera, sol } = values;
 
-        const { photos } = await expeditionService.loadImages(rover, sol, camera);
+            const { photos } = await expeditionService.loadImages(history, rover, sol, camera);
 
-        if (!photos.length) {
-            setMessage(SEARCH_MESSAGE);
-            return;
+            if (!photos.length) {
+                setMessage(SEARCH_MESSAGE);
+                return;
+            }
+
+            setFoundImages(photos);
+
+            const slicedImages = photos.slice(0, IMAGES_PER_PAGE);
+            setImagesToShows(slicedImages);
+        } catch (e) {
+            history.push('/error');
         }
-
-        setFoundImages(photos);
-
-        const slicedImages = photos.slice(0, IMAGES_PER_PAGE);
-        setImagesToShows(slicedImages);
     };
 
     const loopWithSlice = (start, end) => {
@@ -98,7 +102,9 @@ export const MarsExpedition = () => {
     return (
         <div className={s.marsExpeditionWrapper} id="top">
             <div className={s.marsExpedition}>
-                <h1> select rover, camera and martian sol to show images </h1>
+                <h1 className={s.paragraph}>
+                    select rover, camera and martian sol to show images
+                </h1>
 
                 <div className={s.materialFormWrapper}>
                     <MaterialForm loadMarsImages={loadMarsImages}/>
@@ -106,7 +112,7 @@ export const MarsExpedition = () => {
 
                 { toggleSpinner() }
 
-                <h3> { message } </h3>
+                <h2> { message } </h2>
 
                 <ImagesToShow imagesToShow={imagesToShow}/>
 

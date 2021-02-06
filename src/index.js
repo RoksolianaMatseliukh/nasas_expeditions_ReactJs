@@ -1,11 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import * as Sentry from "@sentry/react";
 
-import { App } from './App';
+import { App } from './components/app/App';
+import { app_configuration } from './configuration';
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-roboto';
-import './index.css';
+import './index.scss';
+
+const SENTRY_DSN = app_configuration.SENTRY_DSN;
+
+Sentry.init({
+    dsn: SENTRY_DSN
+});
+
+Sentry.showReportDialog();
 
 const APP = (
     <Router>
