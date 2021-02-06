@@ -4,7 +4,7 @@
 
 .marsExpedition {
     background-color: white;
-    padding: 30px;
+    padding: 40px;
     margin: 0 auto;
     width: 1300px;
     border-radius: 20px;
@@ -15,4 +15,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.buttonsWrapper {
+    margin-top: 30px;
+}
+
+.spinner {
+    margin-top: 50px;
 }

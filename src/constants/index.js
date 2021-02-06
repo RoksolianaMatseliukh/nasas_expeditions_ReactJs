@@ -1,10 +1,10 @@
-export const rovers = [
+export const ROVERS = [
     { name: 'curiosity' },
     { name: 'opportunity' },
     { name: 'spirit' }
 ];
 
-export const cameras = [
+export const CAMERAS = [
     { abbreviation: 'fhaz', name: 'Front Hazard Avoidance Camera' },
     { abbreviation: 'rhaz', name: 'Rear Hazard Avoidance Camera' },
     { abbreviation: 'mast', name: 'Mast Camera' },
@@ -16,6 +16,6 @@ export const cameras = [
     { abbreviation: 'minites', name: 'Miniature Thermal Emission Spectrometer (Mini-TES)' }
 ];
 
-export const imagePerPage = 10;
+export const IMAGES_PER_PAGE = 10;
 
-export const searchMessage = 'no image found, try changing options';
+export const SEARCH_MESSAGE = 'no image found, try changing options';

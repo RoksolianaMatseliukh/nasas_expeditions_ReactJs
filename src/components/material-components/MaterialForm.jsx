@@ -2,7 +2,7 @@ import { Button, FormControl, InputLabel, TextField, makeStyles } from "@materia
 import { ImageSearch } from "@material-ui/icons";
 import { useState } from "react";
 
-import { cameras, rovers } from "../../constants";
+import { CAMERAS, ROVERS } from "../../constants";
 import { MaterialSelect } from "./MaterialSelect";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ export const MaterialForm = ({ loadMarsImages }) => {
                     handleChange={handleChange}
                     label="Rover"
                     name="rover"
-                    array={rovers}/>
+                    array={ROVERS}/>
             </FormControl>
 
             <FormControl variant="filled" className={classes.formControl}>
@@ -48,7 +48,7 @@ export const MaterialForm = ({ loadMarsImages }) => {
                     handleChange={handleChange}
                     label="Camera"
                     name="camera"
-                    array={cameras}/>
+                    array={CAMERAS}/>
             </FormControl>
 
             <FormControl className={classes.formControl}>

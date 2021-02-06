@@ -1,17 +1,26 @@
-import { CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, makeStyles } from '@material-ui/core';
 import { useState } from "react";
 
-import { expeditionService } from '../../services/expedition';
-import { imagePerPage, searchMessage } from '../../constants';
+import { expeditionService } from '../../services/mars-expedition';
+import { IMAGES_PER_PAGE, SEARCH_MESSAGE } from '../../constants';
 import { ImagesToShow } from "../images-to-show/ImagesToShow";
 import { MaterialForm } from "../material-components/MaterialForm";
 import s from './MarsExpedition.module.css'
 
+const useStyles = makeStyles((theme) => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+}));
+
 export const MarsExpedition = () => {
 
-    const [spinner, setSpinner] = useState(false);
+    const classes = useStyles();
+
     const [foundImages, setFoundImages] = useState([]);
     const [imagesToShow, setImagesToShows] = useState([]);
+
+    const [spinner, setSpinner] = useState(false);
     const [next, setNext] = useState(10);
     const [message, setMessage] = useState('');
 
@@ -31,13 +40,13 @@ export const MarsExpedition = () => {
         const { photos } = await expeditionService.loadImages(rover, sol, camera);
 
         if (!photos.length) {
-            setMessage(searchMessage);
+            setMessage(SEARCH_MESSAGE);
             return;
         }
 
         setFoundImages(photos);
 
-        const slicedImages = photos.slice(0, imagePerPage);
+        const slicedImages = photos.slice(0, IMAGES_PER_PAGE);
         setImagesToShows(slicedImages);
     };
 
@@ -48,31 +57,48 @@ export const MarsExpedition = () => {
     };
 
     const handleLoadMoreImages = () => {
-        loopWithSlice(next, next + imagePerPage);
-        setNext(next + imagePerPage);
+        loopWithSlice(next, next + IMAGES_PER_PAGE);
+        setNext(next + IMAGES_PER_PAGE);
     };
 
     const toggleButtonLoadMore = () => {
         if (foundImages.length > imagesToShow.length) {
             return (
-                <>
-                    <button onClick={handleLoadMoreImages}>Load more</button>
-                    <a href="#top">Back to top</a>
-                </>
+                <Button onClick={handleLoadMoreImages}
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        className={classes.button}>
+                    LOAD MORE...
+                </Button>
+            );
+        }
+    };
+
+    const toggleButtonBackToTop = () => {
+        if (imagesToShow.length > IMAGES_PER_PAGE) {
+            return (
+                <Button variant="contained"
+                        color="primary"
+                        size="medium"
+                        href="#top"
+                        className={classes.button}>
+                    BACK TO TOP
+                </Button>
             );
         }
     };
 
     const toggleSpinner = () => {
         if (spinner && !imagesToShow.length && !message) {
-            return <CircularProgress disableShrink />;
+            return <CircularProgress className={s.spinner} disableShrink />;
         }
     };
 
     return (
         <div className={s.marsExpeditionWrapper} id="top">
             <div className={s.marsExpedition}>
-                <h2> select rover, camera and martian sol to show images </h2>
+                <h1> select rover, camera and martian sol to show images </h1>
 
                 <div className={s.materialFormWrapper}>
                     <MaterialForm loadMarsImages={loadMarsImages}/>
@@ -84,7 +110,11 @@ export const MarsExpedition = () => {
 
                 <ImagesToShow imagesToShow={imagesToShow}/>
 
-                { toggleButtonLoadMore() }
+                <div className={s.buttonsWrapper}>
+                    { toggleButtonLoadMore() }
+
+                    { toggleButtonBackToTop() }
+                </div>
             </div>
         </div>
     );

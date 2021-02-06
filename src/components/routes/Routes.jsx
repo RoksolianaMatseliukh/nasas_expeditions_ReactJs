@@ -1,7 +1,7 @@
-import {Route, Switch} from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
-import {Home} from "../home/Home";
-import {MarsExpedition} from "../mars-expedition/MarsExpedition";
+import { Home } from "../home/Home";
+import { MarsExpedition } from "../mars-expedition/MarsExpedition";
 
 export const Routes = () => {
     return (
