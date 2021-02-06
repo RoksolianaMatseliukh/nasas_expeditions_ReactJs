@@ -1,7 +1,7 @@
 import { expeditionService } from '../../services/expedition';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { InputLabel, FormControl, Select, TextField, Button } from '@material-ui/core';
+import { InputLabel, FormControl, Select, TextField, Button, CircularProgress } from '@material-ui/core';
 import { ImageSearch } from '@material-ui/icons';
 import {useEffect, useState} from "react";
 import {FoundImages} from "../found-images/FoundImages";
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 120,
     }
 }));
-const postsPerPage = 3;
+const postsPerPage = 10;
 let arrayForHoldingPosts = [];
 
 export const Expedition = () => {
@@ -26,9 +26,10 @@ export const Expedition = () => {
         camera: '',
         sol: ''
     });
+    const [spinner, setSpinner] = useState(false);
     const [foundImages, setFoundImages] = useState([]);
     const [imagesToShow, setImagesToShows] = useState([]);
-    const [next, setNext] = useState(3);
+    const [next, setNext] = useState(10);
     const [message, setMessage] = useState('');
 
     const rovers = ['curiosity', 'opportunity', 'spirit'];
@@ -52,9 +53,11 @@ export const Expedition = () => {
     };
 
     const loadMarsImages = async () => {
+        setMessage('');
+        setSpinner(true);
         setFoundImages([]);
         setImagesToShows([]);
-        setNext(3)
+        setNext(10)
 
         const { rover, camera, sol } = values;
 
@@ -66,7 +69,6 @@ export const Expedition = () => {
         }
 
         setFoundImages(photos);
-        setMessage('');
         first(0, postsPerPage, photos);
     };
 
@@ -173,6 +175,12 @@ export const Expedition = () => {
                         </FormControl>
                     </div>
 
+                    <div>
+                        {
+                            spinner && !imagesToShow.length && !message &&
+                            <CircularProgress disableShrink />
+                        }
+                    </div>
                     <h3> { message } </h3>
                     <FoundImages  style={{margin: "0 auto"}}
                                   imagesToShow={imagesToShow}/>

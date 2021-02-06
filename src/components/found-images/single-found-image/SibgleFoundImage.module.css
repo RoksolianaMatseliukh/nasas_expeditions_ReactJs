@@ -5,6 +5,7 @@
     border-radius: 30px;
     opacity:0.8;
     transition: 1s;
+    cursor: pointer;
 }
 
 .mars_img:hover {

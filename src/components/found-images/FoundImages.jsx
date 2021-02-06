@@ -4,7 +4,7 @@ export const FoundImages = ({ imagesToShow }) => {
     return (
         <>
             {
-                imagesToShow.length &&
+                imagesToShow.length !==0 &&
 
                 <div>
                             {
