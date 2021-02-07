@@ -45,7 +45,7 @@ export const MarsExpedition = ({ history }) => {
             const { rover, camera, sol } = values;
 
             const { photos } = await expeditionService.loadImages(rover, sol, camera);
-            console.log(window.e.t)
+
             if (!photos.length) {
                 setMessage(SEARCH_MESSAGE);
                 return;
