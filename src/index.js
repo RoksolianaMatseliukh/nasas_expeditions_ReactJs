@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import * as Sentry from "@sentry/react";
 
-import { App } from './components/app/App';
+import { App } from './components';
 import { app_configuration } from './configuration';
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-roboto';

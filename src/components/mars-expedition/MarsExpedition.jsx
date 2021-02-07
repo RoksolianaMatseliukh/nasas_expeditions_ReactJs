@@ -1,10 +1,9 @@
 import { Button, CircularProgress, makeStyles } from '@material-ui/core';
 import { useState } from "react";
 
-import { expeditionService } from '../../services/mars-expedition';
+import { expeditionService } from '../../services';
 import { IMAGES_PER_PAGE, SEARCH_MESSAGE } from '../../constants';
-import { ImagesToShow } from "../images-to-show/ImagesToShow";
-import { MaterialForm } from "../material-components/MaterialForm";
+import { ImagesToShow, MaterialForm } from "../index";
 import s from './MarsExpedition.module.scss'
 
 const useStyles = makeStyles((theme) => ({

@@ -3,7 +3,7 @@ import { ImageSearch } from "@material-ui/icons";
 import { useState } from "react";
 
 import { CAMERAS, ROVERS } from "../../constants";
-import { MaterialSelect } from "./MaterialSelect";
+import { MaterialSelect } from "../index";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

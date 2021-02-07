@@ -1,8 +1,8 @@
-import { SingleImageToShow } from "./single-image-to-show/SingleImageToShow";
-
+import { SingleImageToShow } from "../index";
 import s from './ImagesToShow.module.scss';
 
 export const ImagesToShow = ({ imagesToShow }) => {
+
     return (
         <>
             {

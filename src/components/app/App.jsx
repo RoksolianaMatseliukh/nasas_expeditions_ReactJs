@@ -1,7 +1,7 @@
-import { Header } from "../header/Header";
-import { Routes } from "../routes/Routes";
+import { Header, Routes } from "../index";
 
 export const App = () => {
+
   return (
     <>
         <Header/>
