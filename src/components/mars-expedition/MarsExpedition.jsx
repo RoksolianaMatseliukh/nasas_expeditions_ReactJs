@@ -28,7 +28,7 @@ export const MarsExpedition = ({ history }) => {
         setSpinner(true);
         setFoundImages([]);
         setImagesToShows([]);
-        setNext(10);
+        setNext(IMAGES_PER_PAGE);
     };
 
     const loadMarsImages = async (values) => {
