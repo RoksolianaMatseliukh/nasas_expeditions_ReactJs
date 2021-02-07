@@ -1,5 +1,5 @@
 import { Button, makeStyles } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import s from './Error.module.scss';
 import somethingWentWrong from '../../images/something-went-wrong.jpg';
@@ -7,7 +7,7 @@ import somethingWentWrong from '../../images/something-went-wrong.jpg';
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
-    },
+    }
 }));
 
 export const Error = withRouter(({ history }) => {

@@ -1,6 +1,6 @@
 import { Button, CircularProgress, makeStyles } from '@material-ui/core';
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { expeditionService } from '../../services';
 import { IMAGES_PER_PAGE, SEARCH_MESSAGE } from '../../constants';
@@ -26,6 +26,10 @@ export const MarsExpedition = ({ history }) => {
     const [next, setNext] = useState(IMAGES_PER_PAGE);
     const [message, setMessage] = useState('');
 
+    useEffect(() => {
+        dispatch(setError(false));
+    }, []);
+
     const resetState = () => {
         setMessage('');
         setSpinner(true);
@@ -41,7 +45,7 @@ export const MarsExpedition = ({ history }) => {
             const { rover, camera, sol } = values;
 
             const { photos } = await expeditionService.loadImages(rover, sol, camera);
-
+            console.log(window.e.t)
             if (!photos.length) {
                 setMessage(SEARCH_MESSAGE);
                 return;
