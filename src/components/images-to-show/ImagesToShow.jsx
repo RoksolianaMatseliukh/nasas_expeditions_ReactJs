@@ -4,15 +4,10 @@ import s from './ImagesToShow.module.scss';
 export const ImagesToShow = ({ imagesToShow }) => {
 
     return (
-        <>
+        <div className={s.imagesList}>
             {
-                imagesToShow.length !== 0 &&
-                    <div className={s.imagesList}>
-                        {
-                            imagesToShow.map(image => <SingleImageToShow key={image.id} image={image}/>)
-                        }
-                    </div>
+                imagesToShow.map(image => <SingleImageToShow key={image.id} image={image}/>)
             }
-        </>
+        </div>
     );
 };
