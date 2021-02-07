@@ -1,7 +1,8 @@
 import { Button, makeStyles } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
 
 import s from './Error.module.scss';
-import somethingWentWrong from '../../images/something-went-wrong.jpg'
+import somethingWentWrong from '../../images/something-went-wrong.jpg';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Error = ({ history }) => {
+export const Error = withRouter(({ history }) => {
 
     const classes = useStyles();
 
@@ -26,4 +27,4 @@ export const Error = ({ history }) => {
             </Button>
         </div>
     );
-};
+});

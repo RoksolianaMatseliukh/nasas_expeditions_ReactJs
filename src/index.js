@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from "react-redux";
 import * as Sentry from "@sentry/react";
 
 import { App } from './components';
 import { app_configuration } from './configuration';
+import { store } from "./redux/store";
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-roboto';
 import './index.scss';
@@ -18,7 +20,9 @@ Sentry.init({
 const APP = (
     <Router>
         <React.StrictMode>
-            <App />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </React.StrictMode>
     </Router>
 );

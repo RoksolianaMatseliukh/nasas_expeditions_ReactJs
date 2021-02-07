@@ -1,5 +1,6 @@
 export * from './app/App';
 export * from './home/Home';
+export * from './home/HomeWrapper';
 export * from './error/Error';
 export * from './header/Header';
 export * from './not-found/NotFound';

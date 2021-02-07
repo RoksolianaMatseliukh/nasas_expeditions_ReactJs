@@ -1,10 +1,12 @@
 import { Button, CircularProgress, makeStyles } from '@material-ui/core';
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 import { expeditionService } from '../../services';
 import { IMAGES_PER_PAGE, SEARCH_MESSAGE } from '../../constants';
 import { ImagesToShow, MaterialForm } from "../index";
-import s from './MarsExpedition.module.scss'
+import { setError } from "../../redux/actions";
+import s from './MarsExpedition.module.scss';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -15,19 +17,20 @@ const useStyles = makeStyles((theme) => ({
 export const MarsExpedition = ({ history }) => {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [foundImages, setFoundImages] = useState([]);
-    const [imagesToShow, setImagesToShows] = useState([]);
+    const [imagesToShow, setImagesToShow] = useState([]);
 
     const [spinner, setSpinner] = useState(false);
-    const [next, setNext] = useState(10);
+    const [next, setNext] = useState(IMAGES_PER_PAGE);
     const [message, setMessage] = useState('');
 
     const resetState = () => {
         setMessage('');
         setSpinner(true);
         setFoundImages([]);
-        setImagesToShows([]);
+        setImagesToShow([]);
         setNext(IMAGES_PER_PAGE);
     };
 
@@ -37,7 +40,7 @@ export const MarsExpedition = ({ history }) => {
 
             const { rover, camera, sol } = values;
 
-            const { photos } = await expeditionService.loadImages(history, rover, sol, camera);
+            const { photos } = await expeditionService.loadImages(rover, sol, camera);
 
             if (!photos.length) {
                 setMessage(SEARCH_MESSAGE);
@@ -47,16 +50,17 @@ export const MarsExpedition = ({ history }) => {
             setFoundImages(photos);
 
             const slicedImages = photos.slice(0, IMAGES_PER_PAGE);
-            setImagesToShows(slicedImages);
+            setImagesToShow(slicedImages);
         } catch (e) {
-            history.push('/error');
+            dispatch(setError(true));
+            history.push('/');
         }
     };
 
     const loopWithSlice = (start, end) => {
         const slicedImages = foundImages.slice(start, end);
         const arrayForHoldingImages = [...imagesToShow, ...slicedImages];
-        setImagesToShows(arrayForHoldingImages);
+        setImagesToShow(arrayForHoldingImages);
     };
 
     const handleLoadMoreImages = () => {
