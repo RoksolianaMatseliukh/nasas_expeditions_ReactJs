@@ -15,8 +15,6 @@ Sentry.init({
     dsn: SENTRY_DSN
 });
 
-Sentry.showReportDialog();
-
 const APP = (
     <Router>
         <React.StrictMode>
