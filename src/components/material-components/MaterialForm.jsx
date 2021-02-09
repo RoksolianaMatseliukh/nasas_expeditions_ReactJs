@@ -1,9 +1,10 @@
 import { Button, FormControl, InputLabel, TextField, makeStyles } from "@material-ui/core";
 import { ImageSearch } from "@material-ui/icons";
-import { useState } from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import { CAMERAS, ROVERS } from "../../constants";
 import { MaterialSelect } from "../index";
+import { setValuesToSearch } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -16,17 +17,11 @@ export const MaterialForm = ({ loadMarsImages }) => {
 
     const classes = useStyles();
 
-    const [values, setValues] = useState({
-        rover: '',
-        camera: '',
-        sol: ''
-    });
+    const { rover, camera, sol } = useSelector(({ setValuesToSearchReducer }) => setValuesToSearchReducer);
+    const dispatch = useDispatch();
 
     const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
+        dispatch(setValuesToSearch(event));
     };
 
     return (
@@ -34,7 +29,7 @@ export const MaterialForm = ({ loadMarsImages }) => {
             <FormControl variant="filled" className={classes.formControl}>
                 <InputLabel htmlFor="filled-native-simple">ROVER</InputLabel>
 
-                <MaterialSelect value={values.rover}
+                <MaterialSelect value={rover}
                     handleChange={handleChange}
                     label="Rover"
                     name="rover"
@@ -44,7 +39,7 @@ export const MaterialForm = ({ loadMarsImages }) => {
             <FormControl variant="filled" className={classes.formControl}>
                 <InputLabel htmlFor="filled-native-simple">CAMERA</InputLabel>
 
-                <MaterialSelect value={values.camera}
+                <MaterialSelect value={camera}
                     handleChange={handleChange}
                     label="Camera"
                     name="camera"
@@ -64,8 +59,8 @@ export const MaterialForm = ({ loadMarsImages }) => {
             </FormControl>
 
             <FormControl className={classes.formControl}>
-                <Button onClick={() => loadMarsImages(values)}
-                        disabled={!(!!values.rover && !!values.camera && !!values.sol)}
+                <Button onClick={loadMarsImages}
+                        disabled={!(rover && camera && sol)}
                         variant="contained"
                         color="primary"
                         size="large"

@@ -16,6 +16,6 @@ export const CAMERAS = [
     { abbreviation: 'minites', name: 'Miniature Thermal Emission Spectrometer (Mini-TES)' }
 ];
 
-export const IMAGES_PER_PAGE = 10;
+export const IMAGES_PER_PAGE = 25;
 
 export const SEARCH_MESSAGE = 'no image found, try changing options';
