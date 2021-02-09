@@ -6,7 +6,7 @@ import { expeditionService } from '../../services';
 import { IMAGES_PER_PAGE, SEARCH_MESSAGE } from '../../constants';
 import { ImagesToShow, MaterialForm } from "../index";
 import { setError } from "../../redux/actions";
-import sl from './MarsExpedition.module.scss';
+import s from './MarsExpedition.module.scss';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -107,18 +107,18 @@ export const MarsExpedition = ({ history }) => {
 
     const toggleSpinner = () => {
         if (spinner && !imagesToShow.length && !message) {
-            return <CircularProgress className={sl.spinner} disableShrink />;
+            return <CircularProgress className={s.spinner} disableShrink />;
         }
     };
 
     return (
-        <div className={sl.marsExpeditionWrapper} id="top">
-            <div className={sl.marsExpedition}>
-                <h1 className={sl.paragraph}>
+        <div className={s.marsExpeditionWrapper} id="top">
+            <div className={s.marsExpedition}>
+                <h1 className={s.paragraph}>
                     select rover, camera and martian sol to show images
                 </h1>
 
-                <div className={sl.materialFormWrapper}>
+                <div className={s.materialFormWrapper}>
                     <MaterialForm loadMarsImages={loadMarsImages}/>
                 </div>
 
@@ -128,7 +128,7 @@ export const MarsExpedition = ({ history }) => {
 
                 <ImagesToShow imagesToShow={imagesToShow}/>
 
-                <div className={sl.buttonsWrapper}>
+                <div className={s.buttonsWrapper}>
                     { toggleButtonLoadMore() }
 
                     { toggleButtonBackToTop() }
