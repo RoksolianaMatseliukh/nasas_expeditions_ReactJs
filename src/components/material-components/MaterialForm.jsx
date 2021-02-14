@@ -59,14 +59,14 @@ export const MaterialForm = ({ loadMarsImages }) => {
             </FormControl>
 
             <FormControl className={classes.formControl}>
-                <Button onClick={loadMarsImages}
-                        disabled={!(rover && camera && sol)}
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        endIcon={<ImageSearch />}>
-                    SEARCH
-                </Button>
+                {/*<Button onClick={loadMarsImages}*/}
+                {/*        disabled={!(rover && camera && sol)}*/}
+                {/*        variant="contained"*/}
+                {/*        color="primary"*/}
+                {/*        size="large"*/}
+                {/*        endIcon={<ImageSearch />}>*/}
+                {/*    SEARCH*/}
+                {/*</Button>*/}
             </FormControl>
         </>
     );
