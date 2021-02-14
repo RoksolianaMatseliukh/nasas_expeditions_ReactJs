@@ -45,6 +45,7 @@ export const MarsExpedition = ({ history }) => {
             const { photos } = await expeditionService.loadImages(rover, sol, camera, 1);
 
             if (!photos.length) {
+                setIsLoadMoreBtnVisible(false);
                 setMessage(SEARCH_MESSAGE);
                 return;
             }
@@ -78,7 +79,7 @@ export const MarsExpedition = ({ history }) => {
     };
 
     const toggleButtonLoadMore = () => {
-        if (isLoadMoreBtnVisible && imagesToShow.length >= IMAGES_PER_PAGE) {
+        if (isLoadMoreBtnVisible && !(imagesToShow.length % IMAGES_PER_PAGE) && imagesToShow.length) {
             return (
                 <Button onClick={handleLoadMoreImages}
                         variant="contained"
